@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <form class="createItem" method="POST">
+    <label for="email">Email</label>
+    <input type="text" name="email"/>
+
+    <label for="title">Task</label>
+    <input type="text" name="title"/>
+
+    <label for="notes">Notes</label>
+    <textarea name="notes"></textarea>
+
+    <button>Submit</button>
+  </form>
+
+  {% for item in items %}
+
+  <div class="item">
+    <h2><a href="/item/{{ item.id }}">{{ item.title }}</a></h2>
+    <p><i>{{ item.user.fullName }}</i></p>
+    <p>{{ item.text }}</p>
+    <p><i>{{ item.dateCreated }}</i></p>
+    <p>
+      {% set comma = joiner() %}
+      {% for tag in item.tags -%}
+      {{ comma() }}
+      <a class="tag" href="/item/search/{{ tag }}">{{ tag }}</a>
+      {%- endfor %}
+    </p>
+  </div>
+
+  {% endfor %}
+    
+{% endblock %}
